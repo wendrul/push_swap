@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:24:10 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/16 13:25:46 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	puswa_error(char *msg)
 	#endif
 	exit(0);
 }
-
-#include <stdio.h>
 
 int	is_number(char *nbr_str)
 {
