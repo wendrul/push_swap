@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:26:18 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/16 13:33:36 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,4 @@ int	is_number(char *nbr_str)
 	free(test_nb);
 	return (ans);
 	
-}
-
-int	is_already_in_stack(int nb, t_stack s)
-{
-	int	i;
-
-	i = s->top;
-	while (i >= 0)
-	{
-		if (nb == s->items[i])
-			return (1);
-		i--;
-	}
-	return (0);
 }
