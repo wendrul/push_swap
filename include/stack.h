@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:25:17 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 12:19:34 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/16 14:39:54 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ typedef struct s_stack
 	int (*peek)(struct s_stack *self);
 	int (*pop)(struct s_stack *self);
 	void (*push)(struct s_stack *self, int val);
+	struct s_stack* (*copy)(struct s_stack *self);
 
 }*t_stack;
 
 
 void	    print_stack(t_stack self);
-t_stack     new_stack(int capacity);    
+t_stack     new_stack(int capacity);
+void		delete_stack(t_stack *s);  
 
 #endif

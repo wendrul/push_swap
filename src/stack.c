@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:25:50 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 12:27:54 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/16 14:58:49 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,29 @@ int	pop(t_stack self)
 	return (error_exit(ERR_EMPTY_STACK_POP, DEFAULT_ERROR));
 }
 
+t_stack	copy_stack(t_stack self)
+{
+	t_stack stack_cpy;
+	int i;
+
+	stack_cpy = new_stack(self->maxsize);
+	stack_cpy->top = self->top;
+	stack_cpy->size = self->size;
+	stack_cpy->is_empty = self->is_empty;
+	stack_cpy->is_full = self->is_full;
+	stack_cpy->push = self->push;
+	stack_cpy->peek = self->peek;
+	stack_cpy->pop = self->pop;
+	stack_cpy->copy = self->copy;
+	i = self->top;
+	while (i >= 0)
+	{
+		stack_cpy->items[i] = self->items[i];
+		i--;
+	}
+	return (stack_cpy);
+}
+
 t_stack	new_stack(int capacity)
 {
 	t_stack self = (t_stack )malloc(sizeof(struct s_stack));
@@ -64,6 +87,7 @@ t_stack	new_stack(int capacity)
 	self->push = push;
 	self->peek = peek;
 	self->pop = pop;
+	self->copy = copy_stack;
 	return (self);
 }
 
@@ -82,4 +106,12 @@ void	print_stack(t_stack self)
 		i--;
 	}
 	ft_putendl_fd("", STDIN_FILENO);
+}
+
+void	delete_stack(t_stack *s)
+{
+	free((*s)->items);
+	(*s)->items = NULL;
+	free(*s);
+	*s = NULL;
 }
