@@ -3,14 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
+#    By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/05/30 13:43:13 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/06/16 12:07:04 by wendrul          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		=	push_swap.c
+SRCS		=	src/push_swap.c\
+				src/stack.c\
+				src/ft_error.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
