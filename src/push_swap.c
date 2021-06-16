@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:35:43 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/16 14:25:44 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	push_swap(t_stack a, t_stack b)
 {
 	print_stack(a);
-	printf("inc sorted: %i dec sorted :%i", is_sorted_inc(a), is_sorted_dec(a));
+	op_rotate(a);
+	print_stack(a);
 	(void)b;
 }
 

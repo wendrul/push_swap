@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:35:24 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/16 14:23:39 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ int			is_number(char *nbr_str);
 int			is_already_in_stack(int nb, t_stack s);
 int         is_sorted_inc(t_stack s);
 int         is_sorted_dec(t_stack s);
+
+void		op_swap(t_stack s);
+void		op_push(t_stack from, t_stack to);
+void		op_rotate(t_stack s);
+void		op_rev_rotate(t_stack s);
 
 t_stack		parse_stack(int argc, char **argv);
 

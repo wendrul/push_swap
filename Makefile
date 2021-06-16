@@ -6,7 +6,7 @@
 #    By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/06/16 13:33:56 by wendrul          ###   ########.fr        #
+#    Updated: 2021/06/16 14:22:34 by wendrul          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ SRCS		=	src/push_swap.c\
 				src/ft_error.c\
 				src/puswa_util.c\
 				src/parse_stack.c\
-				src/stack_ops.c
+				src/stack_ops.c\
+				src/stack_ops2.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
