@@ -12,14 +12,46 @@
 
 #include "push_swap.h"
 
+
+void add_instruction(char instructions[], char **operations, int op_nu)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (operations[op_nu][++i])
+	{
+
+	instructions[ft_strlen(instructions)]
+	}
+}
+
+void replace_instruction(char instructions[])
+{
+
+}
+
+char *brute_swap(t_stack a, t_stack b, char instructions[], char **operations, int depth)
+{
+	if (depth > a->maxsize * 2 + 2)
+		return (NULL);
+	if (is_sorted_inc(a))
+		return (instructions);
+	add_instruction(instructions);
+	while (brute_swap() == NULL)
+	{
+
+	}
+}
+
 void	push_swap(t_stack a, t_stack b)
 {
-	print_stack(a);
-	op_rotate(a);
-	op_rev_rotate(a);
-	op_rev_rotate(a);
-	print_stack(a);
-	print_stack(b);
+	if (a->maxsize <= 5)
+		brute_swap(a, b);
+	else
+	{
+
+	}
 }
 
 int	main(int argc, char **argv)
