@@ -19,8 +19,11 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "stack.h"
+# include "queue.h"
 # include "ft_error.h"
 
+
+# define MALLOC_FAIL_ERROR "malloc failed"
 
 /**
  * Use for debuging
@@ -32,6 +35,7 @@
 
 int			puswa_error(char *msg);
 int			is_number(char *nbr_str);
+int         name_cmp(char *s1, char *s2);
 
 int			is_already_in_stack(int nb, t_stack s);
 int			is_sorted_inc(t_stack s);

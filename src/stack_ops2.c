@@ -21,8 +21,8 @@ void	op_swap(t_stack s)
 	{
 		nb1 = s->pop(s);
 		nb2 = s->pop(s);
-		s->push(s, nb2);
 		s->push(s, nb1);
+		s->push(s, nb2);
 	}
 }
 

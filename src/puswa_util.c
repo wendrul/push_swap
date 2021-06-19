@@ -21,6 +21,11 @@ int	puswa_error(char *msg)
 	exit(0);
 }
 
+int name_cmp(char *s1, char *s2)
+{
+	return (0 == ft_strncmp(s1, s2, ft_max(ft_strlen(s1), ft_strlen(s2))));
+}
+
 int	is_number(char *nbr_str)
 {
 	int		nb;

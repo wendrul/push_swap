@@ -16,7 +16,8 @@ SRCS		=	src/push_swap.c\
 				src/puswa_util.c\
 				src/parse_stack.c\
 				src/stack_ops.c\
-				src/stack_ops2.c
+				src/stack_ops2.c\
+				src/queue.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
