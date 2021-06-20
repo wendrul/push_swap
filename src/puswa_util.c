@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:33:36 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/20 11:32:48 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	puswa_error(char *msg)
 {
-	ft_putendl_fd("Error", STDIN_FILENO);
+	ft_putendl_fd("Error", STDERR_FILENO);
 	#ifdef VERBOSE_PUSH_SWAP
-	ft_putendl_fd(msg, STDIN_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
 	#endif
 	exit(0);
 }

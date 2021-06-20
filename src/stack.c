@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:25:50 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/20 11:10:26 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/20 11:33:20 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,18 @@ void	print_stack(t_stack self)
 	int i;
 
 	if (!self)
-		return ft_putendl_fd("    null_stack", STDIN_FILENO);
+		return ft_putendl_fd("    null_stack", STDERR_FILENO);
 	i = self->top;
-	ft_putstr_fd("    ", STDIN_FILENO);
+	ft_putstr_fd("    ", STDERR_FILENO);
 	if (is_empty(self))
-		ft_putstr_fd("\r   []|", STDIN_FILENO);
+		ft_putstr_fd("\r   []|", STDERR_FILENO);
 	while (i >= 0)
 	{
-		ft_putnbr_fd(self->items[i], STDIN_FILENO);
-		ft_putstr_fd("| ", STDIN_FILENO);
+		ft_putnbr_fd(self->items[i], STDERR_FILENO);
+		ft_putstr_fd("| ", STDERR_FILENO);
 		i--;
 	}
-	ft_putendl_fd("", STDIN_FILENO);
+	ft_putendl_fd("", STDERR_FILENO);
 }
 
 void	delete_stack(t_stack *s)

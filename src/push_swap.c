@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/20 11:26:51 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/20 11:31:44 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ void push_swap(t_stack a, t_stack b)
 	// char *ans = brute_swap(a, b, instrucions, ops, 0);
 	char *ans = brute_swap2(a, b, ops);
 	if (ans)
-		ft_putstr_fd(ans, STDIN_FILENO);
+		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
 	{
 		ft_putendl_fd("No solution found", STDERR_FILENO);
