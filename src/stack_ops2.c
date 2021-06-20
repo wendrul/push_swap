@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:45:57 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 14:25:29 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/20 11:17:55 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	op_rotate(t_stack s)
 	int tmp;
 	int i;
 
+	if (s->size(s) <= 1)
+		return;
 	i = s->top;
 	tmp = s->items[s->top];
 	while (i > 0)
@@ -54,6 +56,8 @@ void	op_rev_rotate(t_stack s)
 	int tmp;
 	int i;
 
+	if (s->size(s) <= 1)
+		return;
 	i = 0;
 	tmp = s->items[0];
 	while (i < s->top)

@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 15:09:41 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/20 11:26:51 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,9 @@ int test_instructions(t_stack a, t_stack b, char *instructions)
 	free(steps);
 	if (is_sorted_inc(a) && b->size(b) == 0)
 		ans = 1;
+	// fprintf(stderr, "deletingSTACKS\n");
+	// print_stack(a);
+	// print_stack(b);
 	delete_stack(&a);
 	delete_stack(&b);
 	return (ans);
@@ -169,6 +172,15 @@ int count_char(char *str, char c)
 	return (count);
 }
 
+void	free_queue(t_queue q)
+{
+	while (!is_qempty(q))
+	{
+		free(dequeue(q));
+	}
+	free(q);
+}
+
 char *brute_swap2(t_stack a, t_stack b, char **operations)
 {
 	int i;
@@ -185,10 +197,13 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 	{
 		tmp = dequeue(q);
 		//`printf("\n\nsssssssss\n%seeeeeee\n\n", tmp);
-		if (count_char(tmp, '\n') > 4)
+		if (count_char(tmp, '\n') > 10)
 			break;
 		if (test_instructions(a->copy(a), b->copy(b), tmp))
+		{
+			free_queue(q);
 			return (tmp);
+		}
 		i = -1;
 		while (++i < AMOUNT_OF_OPS)
 		{
@@ -200,6 +215,7 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 		}
 		free(tmp);
 	}
+	free_queue(q);
 	return (NULL);
 }
 
@@ -217,17 +233,22 @@ void push_swap(t_stack a, t_stack b)
 	{
 		ft_putendl_fd("No solution found", STDERR_FILENO);
 	}
+	free(ans);
 }
 
 int main(int argc, char **argv)
 {
 	t_stack a;
 	t_stack b;
+	char *argv2[10] = {"lol", "1", "2", "4", "3"};
 
+
+	(void)argc;
+	(void)argv2;
 	a = parse_stack(argc, argv);
 	b = new_stack(a->maxsize);
-	printf("testing : %d\n", test_instructions(a->copy(a),b->copy(b), "sa\n"));
-	//push_swap(a, b);
+	//printf("testing : %d\n", test_instructions(a->copy(a),b->copy(b), ""));
+	push_swap(a, b);
 	delete_stack(&b);
 	delete_stack(&a);
 	return (0);
