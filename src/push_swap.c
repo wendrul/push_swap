@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/20 11:31:44 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/22 12:59:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,82 +45,41 @@ void remove_instruction(char instructions[])
 	}
 }
 
-// void	replace_instruction(char instructions[])
+// char *brute_swap(t_stack a, t_stack b, char instructions[], char **operations, int depth)
 // {
+// 	t_stack a_cpy;
+// 	t_stack b_cpy;
+// 	int i;
+// 	char *ans;
+
+// 	ans = NULL;
+// 	if (depth > 12) //a->maxsize * 2 + 2)
+// 		return (NULL);
+// 	if (is_sorted_inc(a) && b->size(b) == 0)
+// 		return (ft_strdup(instructions));
+// 	i = -1;
+// 	while (++i < AMOUNT_OF_OPS)
+// 	{
+// 		//fprintf(stderr, "\nsssss\n%seeeeeee\n", instructions);
+// 		add_instruction(instructions, operations[i]);
+// 		a_cpy = a->copy(a);
+// 		b_cpy = b->copy(b);
+// //		printf("doing op %s :\n", operations[i]);
+// //		print_stack(a_cpy);
+// 		execute_op(a_cpy, b_cpy, operations[i]);
+// //		print_stack(a_cpy);
+// //		printf("---------------\n");
+// 		ans = brute_swap(a_cpy, b_cpy, instructions, operations, depth + 1);
+// 		delete_stack(&a_cpy);
+// 		delete_stack(&b_cpy);
+// 		if (ans)
+// 		{
+// 			break;
+// 		}
+// 		remove_instruction(instructions);
+// 	}
+// 	return (ans);
 // }
-
-void execute_op(t_stack a, t_stack b, char *op)
-{
-	if (name_cmp(op, "sa"))
-		op_swap(a);
-	else if (name_cmp(op, "sb"))
-		op_swap(b);
-	else if (name_cmp(op, "pa"))
-		op_push(b, a);
-	else if (name_cmp(op, "pb"))
-		op_push(a, b);
-	else if (name_cmp(op, "ra"))
-		op_rotate(a);
-	else if (name_cmp(op, "rb"))
-		op_rotate(b);
-	else if (name_cmp(op, "rra"))
-		op_rev_rotate(b);
-	else if (name_cmp(op, "rrb"))
-		op_rev_rotate(b);
-	else if (name_cmp(op, "ss"))
-	{
-		op_swap(a);
-		op_swap(b);
-	}
-	else if (name_cmp(op, "rr"))
-	{
-		op_rotate(a);
-		op_rotate(b);
-	}
-	else if (name_cmp(op, "rrr"))
-	{
-		op_rev_rotate(a);
-		op_rev_rotate(b);
-	}
-}
-
-#define AMOUNT_OF_OPS 8
-
-char *brute_swap(t_stack a, t_stack b, char instructions[], char **operations, int depth)
-{
-	t_stack a_cpy;
-	t_stack b_cpy;
-	int i;
-	char *ans;
-
-	ans = NULL;
-	if (depth > 12) //a->maxsize * 2 + 2)
-		return (NULL);
-	if (is_sorted_inc(a) && b->size(b) == 0)
-		return (ft_strdup(instructions));
-	i = -1;
-	while (++i < AMOUNT_OF_OPS)
-	{
-		//fprintf(stderr, "\nsssss\n%seeeeeee\n", instructions);
-		add_instruction(instructions, operations[i]);
-		a_cpy = a->copy(a);
-		b_cpy = b->copy(b);
-//		printf("doing op %s :\n", operations[i]);
-//		print_stack(a_cpy);
-		execute_op(a_cpy, b_cpy, operations[i]);
-//		print_stack(a_cpy);
-//		printf("---------------\n");
-		ans = brute_swap(a_cpy, b_cpy, instructions, operations, depth + 1);
-		delete_stack(&a_cpy);
-		delete_stack(&b_cpy);
-		if (ans)
-		{
-			break;
-		}
-		remove_instruction(instructions);
-	}
-	return (ans);
-}
 
 
 int test_instructions(t_stack a, t_stack b, char *instructions)
@@ -222,16 +181,34 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 
 void push_swap(t_stack a, t_stack b)
 {
-	char instrucions[300];
 	char *ops[] = {"sa\n", "sb\n", "pa\n", "pb\n", "ra\n", "rb\n", "rra\n", "rrb\n"};
-	instrucions[0] = 0;
-	// char *ans = brute_swap(a, b, instrucions, ops, 0);
-	char *ans = brute_swap2(a, b, ops);
+	char *ans;
+	char *ans2;
+	t_sort_algo sort_algo_list[AMOUNT_OF_SORTS + 1];
+	int i;
+
+	sort_algo_list[0] = bubble_sort;
+	sort_algo_list[1] = NULL;
+	ans = brute_swap2(a, b, ops);
+	free(ans);
+	ans = NULL;
 	if (ans)
 		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
 	{
-		ft_putendl_fd("No solution found", STDERR_FILENO);
+		i = -1;
+		while (sort_algo_list[++i])
+		{
+			ans2 = sort_algo_list[i](a->copy(a), b->copy(b));
+			if (!ans || count_char(ans, '\n') > count_char(ans2, '\n'))
+			{
+				free(ans);
+				ans = ans2;
+			}
+			else
+				free(ans2);
+		}
+		ft_putstr_fd(ans, STDOUT_FILENO);
 	}
 	free(ans);
 }
@@ -242,8 +219,8 @@ int main(int argc, char **argv)
 	t_stack b;
 	char *argv2[10] = {"lol", "1", "2", "4", "3"};
 
-
 	(void)argc;
+	(void)argv;
 	(void)argv2;
 	a = parse_stack(argc, argv);
 	b = new_stack(a->maxsize);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_ops.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:29:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:36:36 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/22 12:41:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,46 @@ int	is_already_in_stack(int nb, t_stack s)
 		i--;
 	}
 	return (0);
+}
+
+void execute_op(t_stack a, t_stack b, char *op)
+{
+	if (name_cmp(op, "sa"))
+		op_swap(a);
+	else if (name_cmp(op, "sb"))
+		op_swap(b);
+	else if (name_cmp(op, "pa"))
+		op_push(b, a);
+	else if (name_cmp(op, "pb"))
+		op_push(a, b);
+	else if (name_cmp(op, "ra"))
+		op_rotate(a);
+	else if (name_cmp(op, "rb"))
+		op_rotate(b);
+	else if (name_cmp(op, "rra"))
+		op_rev_rotate(a);
+	else if (name_cmp(op, "rrb"))
+		op_rev_rotate(b);
+	else if (name_cmp(op, "ss"))
+	{
+		op_swap(a);
+		op_swap(b);
+	}
+	else if (name_cmp(op, "rr"))
+	{
+		op_rotate(a);
+		op_rotate(b);
+	}
+	else if (name_cmp(op, "rrr"))
+	{
+		op_rev_rotate(a);
+		op_rev_rotate(b);
+	}
+    else
+    {
+        ft_putstr_fd(op, STDERR_FILENO);
+        ft_putendl_fd(": did not match any operations", STDERR_FILENO);
+    }
 }
 
 

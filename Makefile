@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+         #
+#    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/06/16 14:22:34 by wendrul          ###   ########.fr        #
+#    Updated: 2021/06/22 10:14:32 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS		=	src/push_swap.c\
 				src/parse_stack.c\
 				src/stack_ops.c\
 				src/stack_ops2.c\
-				src/queue.c
+				src/queue.c\
+				src/sorts1.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
