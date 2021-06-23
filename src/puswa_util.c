@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/23 11:23:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:18:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ char	*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
 	buf[i] = '\n';
 	buf[i + 1] = '\0';
 	execute_op(a, b, op);
-	// printf("%s:\n", op);
-	// print_stack(a);
+	printf("%s:\n", op);
+	printf("    a:\n");
+	print_stack(a);
+	printf("    b:\n");
+	print_stack(b);
 	return (join_delete(ans, ft_strdup(buf)));
 }

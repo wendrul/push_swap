@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:29:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/23 11:08:47 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:34:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ int is_sorted_inc(t_stack s)
         i--;
     }
     return (1);
+}
+
+int is_cycle_sorted(t_stack s)
+{
+	int i;
+	int discontinuities;
+
+	discontinuities = 0;
+	i = 0;
+	while (i < s->size(s) - 1)
+	{
+		if (s->items[i] < s->items[i + 1])
+			discontinuities++;
+		i++;
+	}
+	return (discontinuities <= 1);
 }
 
 int	is_already_in_stack(int nb, t_stack s)

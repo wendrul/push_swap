@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/23 11:23:17 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:16:47 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ARG_DUPLICATE "argument is duplicate"
 # define AMOUNT_OF_SORTS 10
 # define AMOUNT_OF_OPS 8
-# define MAX_BFS_DEPTH 6
+# define MAX_BFS_DEPTH 5
 
 
 
@@ -46,6 +46,7 @@ int			name_cmp(char *s1, char *s2);
 int			is_already_in_stack(int nb, t_stack s);
 int			is_sorted_inc(t_stack s);
 int			is_sorted_dec(t_stack s);
+int         is_cycle_sorted(t_stack s);
 int         stack_min_index(t_stack s);
 
 void		op_swap(t_stack s);
@@ -62,5 +63,7 @@ char		*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans);
 char    *bounce_sort(t_stack a, t_stack b);
 char    *bubble_sort(t_stack a, t_stack b);
 char	*insert_sort1(t_stack a, t_stack b);
+char	*insert_sort2(t_stack a, t_stack b);
+char    *geek_sort(t_stack a, t_stack b);
 
 #endif
