@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:29:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/22 12:41:37 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 11:08:47 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,22 @@ int	is_already_in_stack(int nb, t_stack s)
 		i--;
 	}
 	return (0);
+}
+
+int	stack_min_index(t_stack s)
+{
+	int	i;
+	int	min_index;
+	
+	i = 0;
+	min_index = 0;
+	while (i < s->size(s))
+	{
+		if (s->items[i] < s->items[min_index])
+			min_index = i;
+		i++;
+	}
+	return (min_index);
 }
 
 void execute_op(t_stack a, t_stack b, char *op)

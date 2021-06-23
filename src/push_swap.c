@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/22 12:59:49 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 11:25:06 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 	{
 		tmp = dequeue(q);
 		//`printf("\n\nsssssssss\n%seeeeeee\n\n", tmp);
-		if (count_char(tmp, '\n') > 10)
+		if (count_char(tmp, '\n') > MAX_BFS_DEPTH)
 			break;
 		if (test_instructions(a->copy(a), b->copy(b), tmp))
 		{
@@ -187,11 +187,14 @@ void push_swap(t_stack a, t_stack b)
 	t_sort_algo sort_algo_list[AMOUNT_OF_SORTS + 1];
 	int i;
 
-	sort_algo_list[0] = bubble_sort;
-	sort_algo_list[1] = NULL;
+	sort_algo_list[0] = insert_sort1;
+	sort_algo_list[1] = bubble_sort;
+	sort_algo_list[2] = bounce_sort;
+	sort_algo_list[3] = NULL;
+
 	ans = brute_swap2(a, b, ops);
-	free(ans);
-	ans = NULL;
+	//free(ans);
+	//ans = NULL;
 	if (ans)
 		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
@@ -204,6 +207,7 @@ void push_swap(t_stack a, t_stack b)
 			{
 				free(ans);
 				ans = ans2;
+				fprintf(stderr, "algo %d is better\n", i);
 			}
 			else
 				free(ans2);
