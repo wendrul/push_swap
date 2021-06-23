@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/23 17:41:42 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 20:28:51 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,9 @@ int	where_to_place(t_stack s, int c)
 {
 	int i;
 	int max_index;
+	int	w;
 
-	#ifdef VERBOSE_PUSH_SWAP	
+	#ifdef VERBOSE_PUSH_SWAP
 	if (!is_cycle_sorted(s))
 		error_exit("wtf dude that shit aint even sorted", FATAL_ERROR);
 	#endif
@@ -123,13 +124,16 @@ int	where_to_place(t_stack s, int c)
 	while (i < s->size(s))
 	{
 		if (s->items[i] > s->items[max_index])
-			i = max_index;
+			max_index = i;
 		i++;
 	}
 	i = max_index;
-	while (c < s->items[max_index])
+	w = 0;
+
+	while (w < s->size(s) && c < s->items[max_index])
 	{
 		i++;
+		w++;
 		if (i > s->size(s))
 			i = 0;
 	}
@@ -153,7 +157,7 @@ int	find_best_pivot(t_stack a, t_stack b, char **op, int *a_index)
 		cost = ft_max(b->top - i, a->top - where_to_place(a, b->items[i]));
 		if (cost < cost_min)
 		{
-			*a_index = a->top - where_to_place(a, b->items[i]);
+			*a_index = where_to_place(a, b->items[i]);
 			cost_min = cost;
 			min_index = i;
 		}
@@ -165,7 +169,7 @@ int	find_best_pivot(t_stack a, t_stack b, char **op, int *a_index)
 		cost = ft_max(i + 1, where_to_place(a, b->items[i]) + 1);
 		if (cost < cost_min)
 		{
-			*a_index = where_to_place(a, b->items[i]) + 1;
+			*a_index = where_to_place(a, b->items[i]);
 			*op = "rrr";
 			cost_min = cost;
 			min_index = i;
@@ -192,11 +196,11 @@ char	*insert_sort2(t_stack a, t_stack b)
 		else
 			ans = exec_and_str_op(a, b, "ra", ans);
 	}
+	printf("you should place %d at index [%d] aka %d\n", b->items[0], where_to_place(a, b->items[0]), a->items[where_to_place(a, b->items[0])]);
 	while (!b->is_empty(b))
 	{
 		pivot = b->items[find_best_pivot(a, b, &op, &below_pivot_idx)];
 		below_pivot = a->items[below_pivot_idx];
-		printf("b-pivot: %d, a-pivot: %d\n", pivot, below_pivot);
 		while (b->peek(b) != pivot && a->peek(a) != below_pivot)
 			ans = exec_and_str_op(a, b, op, ans);
 		op = name_cmp("rrr", op) ? "rrb" : "rb";

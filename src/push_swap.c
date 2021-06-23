@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/23 17:16:54 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/23 18:55:24 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,12 +223,12 @@ int main(int argc, char **argv)
 {
 	t_stack a;
 	t_stack b;
-	char *argv2[10] = {"lol", "1", "2", "4", "3"};
+	char *argv2[10] = {"lol", "1", "2", "4", "3", "9", "8"};
 
 	(void)argc;
 	(void)argv;
 	(void)argv2;
-	a = parse_stack(argc, argv);
+	a = parse_stack(7, argv2);
 	b = new_stack(a->maxsize);
 	//printf("testing : %d\n", test_instructions(a->copy(a),b->copy(b), ""));
 	push_swap(a, b);
