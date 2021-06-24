@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/23 17:16:47 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/24 21:52:01 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 # define MAX_BFS_DEPTH 5
 
 
+typedef struct  s_cost {
+    int for_a;
+    int for_b;
+}t_cost;
 
 typedef char* (*t_sort_algo)(t_stack a, t_stack b);
 

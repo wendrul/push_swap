@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/23 20:28:51 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:30:16 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,84 +109,140 @@ char *insert_sort1(t_stack a, t_stack b)
 	return (ans);
 }
 
-int	where_to_place(t_stack s, int c)
+int rotations_till_push(const t_stack s_original, int c, int rotation_dir)
 {
-	int i;
-	int max_index;
-	int	w;
+	t_stack s;
+	int rrs;
 
-	#ifdef VERBOSE_PUSH_SWAP
-	if (!is_cycle_sorted(s))
-		error_exit("wtf dude that shit aint even sorted", FATAL_ERROR);
-	#endif
-	i = 0;
-	max_index = 0;
-	while (i < s->size(s))
+	rrs = 0;
+#ifdef VERBOSE_PUSH_SWAP
+	if (!is_cycle_sorted(s_original))
+		error_exit("wtf dude that shit aint even sorted", DEFAULT_ERROR);
+#endif
+	if (rotation_dir == 1)
 	{
-		if (s->items[i] > s->items[max_index])
-			max_index = i;
-		i++;
+		s = s_original->copy(s_original);
+		s->push(s, c);
+		while (!is_cycle_sorted(s))
+		{
+			s->pop(s);
+			op_rotate(s);
+			s->push(s, c);
+			rrs++;
+		}
+		delete_stack(&s);
 	}
-	i = max_index;
-	w = 0;
+	else if (rotation_dir == -1)
+	{
+		s = s_original->copy(s_original);
+		s->push(s, c);
+		while (!is_cycle_sorted(s))
+		{
+			s->pop(s);
+			op_rev_rotate(s);
+			s->push(s, c);
+			rrs--;
+		}
+		delete_stack(&s);
+	}
+	else
+		error_exit("wrong direction", DEFAULT_ERROR);
 
-	while (w < s->size(s) && c < s->items[max_index])
-	{
-		i++;
-		w++;
-		if (i > s->size(s))
-			i = 0;
-	}
-	return (i);
+	return (rrs);
 }
 
-int	find_best_pivot(t_stack a, t_stack b, char **op, int *a_index)
+int ft_abs(int n)
 {
-	int i;
-	int cost;
-	int cost_min;
-	int min_index;
-
-	i = 0;
-	cost_min = ft_max(b->top - 0, a->top - where_to_place(a, b->items[0]));
-	min_index = 0;
-	*op = "rr";
-	*a_index = a->top - where_to_place(a, b->items[0]);
-	while (i < b->size(b))
-	{
-		cost = ft_max(b->top - i, a->top - where_to_place(a, b->items[i]));
-		if (cost < cost_min)
-		{
-			*a_index = where_to_place(a, b->items[i]);
-			cost_min = cost;
-			min_index = i;
-		}
-		i++;
-	}
-	i = 0;
-	while (i < b->size(b))
-	{
-		cost = ft_max(i + 1, where_to_place(a, b->items[i]) + 1);
-		if (cost < cost_min)
-		{
-			*a_index = where_to_place(a, b->items[i]);
-			*op = "rrr";
-			cost_min = cost;
-			min_index = i;
-		}
-		i++;
-	}
-	return (min_index);
+	if (n > 0)
+		return (n);
+	return (-n);
 }
 
-char	*insert_sort2(t_stack a, t_stack b)
+t_cost lesser_cost(t_cost cost1, t_cost cost2)
+{
+	if (ft_max(ft_abs(cost1.for_a), ft_abs(cost1.for_b)) < ft_max(ft_abs(cost2.for_a), ft_abs(cost2.for_b)))
+		return (cost1);
+	return (cost2);
+}
+
+t_cost get_cost(t_stack a, t_stack b, int p_index)
+{
+	t_cost cost_rr;
+	t_cost cost_rrr;
+
+	cost_rr.for_a = rotations_till_push(a, b->items[p_index], 1);
+	cost_rr.for_b = b->top - p_index;
+
+	cost_rrr.for_a = rotations_till_push(a, b->items[p_index], -1);
+	cost_rrr.for_b = p_index + 1;
+
+	return (lesser_cost(cost_rr, cost_rrr));
+}
+
+t_cost find_best_pivot(t_stack a, t_stack b)
+{
+	int i;
+	t_cost min_cost;
+
+#ifdef VERBOSE_PUSH_SWAP
+	if (a->is_empty(a) || b->is_empty(b))
+		error_exit("wtf can't find pivot on an empty stack", DEFAULT_ERROR);
+#endif
+
+	min_cost = get_cost(a, b, 0);
+	i = -1;
+	while (++i < b->size(b))
+		min_cost = lesser_cost(min_cost, get_cost(a, b, i));
+	return (min_cost);
+}
+
+char *rotate_to_pivot(t_stack a, t_stack b, t_cost rotations, char *ans)
+{
+	if (rotations.for_a < 0 || rotations.for_b < 0)
+	{
+		while (rotations.for_a < 0 && rotations.for_b < 0)
+		{
+			ans = exec_and_str_op(a, b, "rrr", ans);
+			rotations.for_a++;
+			rotations.for_b++;
+		}
+		while (rotations.for_a < 0)
+		{
+			ans = exec_and_str_op(a, b, "rra", ans);
+			rotations.for_a++;
+		}
+		while (rotations.for_b < 0)
+		{
+			ans = exec_and_str_op(a, b, "rrb", ans);
+			rotations.for_b++;
+		}
+	}
+	else
+	{
+		while (rotations.for_a > 0 && rotations.for_b > 0)
+		{
+			ans = exec_and_str_op(a, b, "rr", ans);
+			rotations.for_a--;
+			rotations.for_b--;
+		}
+		while (rotations.for_a > 0)
+		{
+			ans = exec_and_str_op(a, b, "ra", ans);
+			rotations.for_a--;
+		}
+		while (rotations.for_b > 0)
+		{
+			ans = exec_and_str_op(a, b, "rb", ans);
+			rotations.for_b--;
+		}
+	}
+	return (ans);
+}
+
+char *insert_sort2(t_stack a, t_stack b)
 {
 	char *ans;
-	int pivot;
-	int below_pivot;
-	int below_pivot_idx;
-	char *op;
-	
+	t_cost rotations;
 
 	ans = ft_strdup("");
 	while (!is_cycle_sorted(a))
@@ -196,21 +252,26 @@ char	*insert_sort2(t_stack a, t_stack b)
 		else
 			ans = exec_and_str_op(a, b, "ra", ans);
 	}
-	printf("you should place %d at index [%d] aka %d\n", b->items[0], where_to_place(a, b->items[0]), a->items[where_to_place(a, b->items[0])]);
+	//printf("you should place %d at index [%d] aka %d\n", b->items[0], where_to_place(a, b->items[0]), a->items[where_to_place(a, b->items[0])]);
+	// t_stack test;
+	// test = new_stack(20);
+	// test->push(test, 8);
+	// test->push(test, 3);
+	// test->push(test, 2);
+	// test->push(test, 1);
+	// test->push(test, 9);
+	// test->push(test, 4);
+	// print_stack(test);
+	// printf("iscyclesort: %d\n", is_cycle_sorted(test));
+	// exit(0);
 	while (!b->is_empty(b))
 	{
-		pivot = b->items[find_best_pivot(a, b, &op, &below_pivot_idx)];
-		below_pivot = a->items[below_pivot_idx];
-		while (b->peek(b) != pivot && a->peek(a) != below_pivot)
-			ans = exec_and_str_op(a, b, op, ans);
-		op = name_cmp("rrr", op) ? "rrb" : "rb";
-		while (b->peek(b) != pivot)
-			ans = exec_and_str_op(a, b, op, ans);
-		op = name_cmp("rrb", op) ? "rra" : "ra";
-		while (a->peek(a) != below_pivot)
-			ans = exec_and_str_op(a, b, op, ans);
+		rotations = find_best_pivot(a, b);
+		ans = rotate_to_pivot(a, b, rotations, ans);
 		ans = exec_and_str_op(a, b, "pa", ans);
 	}
+	while (!is_sorted_inc(a))
+		ans = exec_and_str_op(a, b, "rra", ans);
 	delete_stack(&a);
 	delete_stack(&b);
 	return (ans);

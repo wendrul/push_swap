@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:29:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/23 16:34:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:24:39 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ int is_cycle_sorted(t_stack s)
 
 	discontinuities = 0;
 	i = 0;
+	if (s->size(s) <= 2)
+		return (1);
+	if (s->items[s->top] < s->items[0])
+		discontinuities++;
 	while (i < s->size(s) - 1)
 	{
 		if (s->items[i] < s->items[i + 1])
