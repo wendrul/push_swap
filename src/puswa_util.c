@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   puswa_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/20 11:32:48 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/24 22:36:40 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,41 @@ int	is_number(char *nbr_str)
 	free(test_nb);
 	return (ans);
 	
+}
+
+char    *join_delete(char *str1, char *str2)
+{
+	char *ret;
+
+	if (str1 == NULL || str2 == NULL)
+		return (NULL);
+	ret = ft_strjoin(str1, str2);
+	if (!ret)
+		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
+	free(str1);
+	free(str2);
+	str1 = NULL;
+	str2 = NULL;
+	return (ret);
+}
+
+char	*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
+{
+	char buf[20];
+	int i;
+
+	i = -1;
+	while (op[++i])
+		buf[i] = op[i];
+	buf[i] = '\n';
+	buf[i + 1] = '\0';
+	execute_op(a, b, op);
+
+	fprintf(stderr, "%s:\n", op);
+	fprintf(stderr, "    a:\n");
+	print_stack(a);
+	fprintf(stderr, "    b:\n");
+	print_stack(b);
+	
+	return (join_delete(ans, ft_strdup(buf)));
 }
