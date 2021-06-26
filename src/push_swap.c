@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/20 11:31:44 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/20 18:49:02 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ char *brute_swap(t_stack a, t_stack b, char instructions[], char **operations, i
 		add_instruction(instructions, operations[i]);
 		a_cpy = a->copy(a);
 		b_cpy = b->copy(b);
-//		printf("doing op %s :\n", operations[i]);
-//		print_stack(a_cpy);
+		//		printf("doing op %s :\n", operations[i]);
+		//		print_stack(a_cpy);
 		execute_op(a_cpy, b_cpy, operations[i]);
-//		print_stack(a_cpy);
-//		printf("---------------\n");
+		//		print_stack(a_cpy);
+		//		printf("---------------\n");
 		ans = brute_swap(a_cpy, b_cpy, instructions, operations, depth + 1);
 		delete_stack(&a_cpy);
 		delete_stack(&b_cpy);
@@ -121,7 +121,6 @@ char *brute_swap(t_stack a, t_stack b, char instructions[], char **operations, i
 	}
 	return (ans);
 }
-
 
 int test_instructions(t_stack a, t_stack b, char *instructions)
 {
@@ -150,11 +149,52 @@ int test_instructions(t_stack a, t_stack b, char *instructions)
 	return (ans);
 }
 
-int operation_coherence(char *instrctions, char *new_op)
+int get_last_op(char *instructions, char last_op_buf[])
 {
-	(void)new_op;
-	(void)instrctions;
+	int i;
+	int j;
+	i = ft_strlen(instructions) - 2;
+	if (i < 0)
+		return (0);
+	while (i > 0 && instructions[i] != '\n')
+	{
+		i--;
+	}
+	if (instructions[i] == '\n')
+		i++;
+	j = 0;
+	while (instructions[i] != '\n')
+	{
+		last_op_buf[j] = instructions[i];
+		i++;
+		j++;
+	}
+	last_op_buf[j] = '\0';
+	return (1);
+}
 
+int operation_coherence(char *instructions, char *new_op)
+{
+	char last[12];
+
+	if (!get_last_op(instructions, last))
+		return (1);
+	if (name_cmp(new_op, "sa") && (name_cmp(last, "sa") || name_cmp(last, "sb")))
+		return (0);
+	else if (name_cmp(new_op, "sb") && (name_cmp(last, "sb")))
+		return (0);
+	else if (name_cmp(new_op, "pa") && (name_cmp(last, "pb")))
+		return (0);
+	else if (name_cmp(new_op, "pb") && (name_cmp(last, "pa")))
+		return (0);
+	else if (name_cmp(new_op, "ra") && (name_cmp(last, "rra")))
+		return (0);
+	else if (name_cmp(new_op, "rra") && (name_cmp(last, "ra")))
+		return (0);
+	else if (name_cmp(new_op, "rb") && (name_cmp(last, "rrb")))
+		return (0);
+	else if (name_cmp(new_op, "rrb") && (name_cmp(last, "rb")))
+		return (0);
 	return (1);
 }
 
@@ -172,7 +212,7 @@ int count_char(char *str, char c)
 	return (count);
 }
 
-void	free_queue(t_queue q)
+void free_queue(t_queue q)
 {
 	while (!is_qempty(q))
 	{
@@ -190,15 +230,13 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 
 	tmp = ft_strdup("");
 	q = create_queue();
-	if(!q || !tmp)
+	if (!q || !tmp)
 		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
 	enqueue(q, tmp);
 	while (!is_qempty(q))
 	{
 		tmp = dequeue(q);
 		//`printf("\n\nsssssssss\n%seeeeeee\n\n", tmp);
-		if (count_char(tmp, '\n') > 10)
-			break;
 		if (test_instructions(a->copy(a), b->copy(b), tmp))
 		{
 			free_queue(q);
@@ -207,10 +245,13 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 		i = -1;
 		while (++i < AMOUNT_OF_OPS)
 		{
-			if (operation_coherence(tmp, operations[i]))
+			if (count_char(tmp, '\n') < 7)
 			{
-				tmp2 = ft_strjoin(tmp, operations[i]);
-				enqueue(q, tmp2);
+				if (operation_coherence(tmp, operations[i]))
+				{
+					tmp2 = ft_strjoin(tmp, operations[i]);
+					enqueue(q, tmp2);
+				}
 			}
 		}
 		free(tmp);
@@ -218,7 +259,6 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 	free_queue(q);
 	return (NULL);
 }
-
 
 void push_swap(t_stack a, t_stack b)
 {
@@ -241,7 +281,6 @@ int main(int argc, char **argv)
 	t_stack a;
 	t_stack b;
 	char *argv2[10] = {"lol", "1", "2", "4", "3"};
-
 
 	(void)argc;
 	(void)argv2;
