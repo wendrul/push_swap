@@ -6,7 +6,7 @@
 /*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/26 19:44:05 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/26 20:02:02 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,40 +81,6 @@ void remove_instruction(char instructions[])
 // 	return (ans);
 // }
 
-void execute_op(t_stack a, t_stack b, char *op)
-{
-	if (name_cmp(op, "sa"))
-		op_swap(a);
-	else if (name_cmp(op, "sb"))
-		op_swap(b);
-	else if (name_cmp(op, "pa"))
-		op_push(b, a);
-	else if (name_cmp(op, "pb"))
-		op_push(a, b);
-	else if (name_cmp(op, "ra"))
-		op_rotate(a);
-	else if (name_cmp(op, "rb"))
-		op_rotate(b);
-	else if (name_cmp(op, "rra"))
-		op_rev_rotate(b);
-	else if (name_cmp(op, "rrb"))
-		op_rev_rotate(b);
-	else if (name_cmp(op, "ss"))
-	{
-		op_swap(a);
-		op_swap(b);
-	}
-	else if (name_cmp(op, "rr"))
-	{
-		op_rotate(a);
-		op_rotate(b);
-	}
-	else if (name_cmp(op, "rrr"))
-	{
-		op_rev_rotate(a);
-		op_rev_rotate(b);
-	}
-}
 
 #define AMOUNT_OF_OPS 8
 

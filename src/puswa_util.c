@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   puswa_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/24 22:36:40 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/27 10:17:20 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ char	*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
 	buf[i + 1] = '\0';
 	execute_op(a, b, op);
 
-	fprintf(stderr, "%s:\n", op);
-	fprintf(stderr, "    a:\n");
-	print_stack(a);
-	fprintf(stderr, "    b:\n");
-	print_stack(b);
+	// fprintf(stderr, "%s:\n", op);
+	// fprintf(stderr, "    a:\n");
+	// print_stack(a);
+	// fprintf(stderr, "    b:\n");
+	// print_stack(b);
 	
 	return (join_delete(ans, ft_strdup(buf)));
 }

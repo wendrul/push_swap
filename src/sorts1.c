@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorts1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/24 22:30:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/27 12:00:35 by wendrul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ t_cost get_cost(t_stack a, t_stack b, int p_index)
 	cost_rr.for_b = b->top - p_index;
 
 	cost_rrr.for_a = rotations_till_push(a, b->items[p_index], -1);
-	cost_rrr.for_b = p_index + 1;
+	cost_rrr.for_b = -(p_index + 1);
 
 	return (lesser_cost(cost_rr, cost_rrr));
 }
@@ -245,6 +245,7 @@ char *insert_sort2(t_stack a, t_stack b)
 	t_cost rotations;
 
 	ans = ft_strdup("");
+	fprintf(stderr, "starting\n");
 	while (!is_cycle_sorted(a))
 	{
 		if (a->peek(a) > a->items[a->top - 1])
@@ -252,6 +253,7 @@ char *insert_sort2(t_stack a, t_stack b)
 		else
 			ans = exec_and_str_op(a, b, "ra", ans);
 	}
+	fprintf(stderr, "step 1 finished (get sorted cycle)\n");
 	//printf("you should place %d at index [%d] aka %d\n", b->items[0], where_to_place(a, b->items[0]), a->items[where_to_place(a, b->items[0])]);
 	// t_stack test;
 	// test = new_stack(20);
@@ -270,8 +272,11 @@ char *insert_sort2(t_stack a, t_stack b)
 		ans = rotate_to_pivot(a, b, rotations, ans);
 		ans = exec_and_str_op(a, b, "pa", ans);
 	}
+	fprintf(stderr, "step 2 finished (pivot to a)\n");
+
 	while (!is_sorted_inc(a))
 		ans = exec_and_str_op(a, b, "rra", ans);
+	fprintf(stderr, "step 3 finished (rotate back)\n");
 	delete_stack(&a);
 	delete_stack(&b);
 	return (ans);
