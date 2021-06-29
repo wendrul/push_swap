@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/24 21:52:01 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/29 14:26:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,25 @@
 # define MAX_BFS_DEPTH 5
 
 
+# define NUMBER_OF_CHUNKS 3
+
+
 typedef struct  s_cost {
     int for_a;
     int for_b;
 }t_cost;
 
+typedef struct s_arr
+{
+    int *arr;
+    int size;
+    int cur;
+}t_arr;
+
+
 typedef char* (*t_sort_algo)(t_stack a, t_stack b);
+
+int current_ops;
 
 int			puswa_error(char *msg);
 int			is_number(char *nbr_str);
@@ -59,10 +72,14 @@ void		op_rotate(t_stack s);
 void		op_rev_rotate(t_stack s);
 
 t_stack		parse_stack(int argc, char **argv);
+t_stack indexify_stack(t_stack s);
 
 char		*join_delete(char *str1, char *str2);
 void		execute_op(t_stack a, t_stack b, char *op);
 char		*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans);
+
+int gssa(int *arr, int **ret, int value, int cur_pos, int len);
+void print_arr(int *arr, int size);
 
 char    *bounce_sort(t_stack a, t_stack b);
 char    *bubble_sort(t_stack a, t_stack b);

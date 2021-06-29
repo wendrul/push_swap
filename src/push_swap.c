@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/26 20:02:02 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/29 13:49:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,11 +305,14 @@ int main(int argc, char **argv)
 	t_stack a;
 	t_stack b;
 	char *argv2[10] = {"lol", "1", "2", "4", "3", "9", "8"};
-
+	current_ops = 0;
 	(void)argc;
 	(void)argv;
 	(void)argv2;
 	a = parse_stack(argc, argv);
+	b = indexify_stack(a);
+	delete_stack(&a);
+	a = b;
 	b = new_stack(a->maxsize);
 	//printf("testing : %d\n", test_instructions(a->copy(a),b->copy(b), ""));
 	push_swap(a, b);

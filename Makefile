@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/06/22 10:14:32 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/06/29 13:50:21 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS		=	src/push_swap.c\
 				src/stack_ops.c\
 				src/stack_ops2.c\
 				src/queue.c\
-				src/sorts1.c
+				src/sorts1.c\
+				src/gssa.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
@@ -155,4 +156,4 @@ together:		all
 				@echo "$(YELLOW)║ ║├─┤  └┬┘├┤ ├─┤├─┤    │ │ └─┐  ├─┤│  │    │  │ │││││││││ ┬   │ │ ││ ┬├┤  │ ├─┤├┤ ├┬┘$(RESET)"
 				@echo "$(YELLOW)╚═╝┴ ┴   ┴ └─┘┴ ┴┴ ┴┘,  ┴ ┴ └─┘  ┴ ┴┴─┘┴─┘  └─┘└─┘┴ ┴┴┘└┘└─┘   ┴ └─┘└─┘└─┘ ┴ ┴ ┴└─┘┴└─$(RESET)"
 
-.PHONY:	all clean fclean test re
+.PHONY:	all clean fclean test re together
