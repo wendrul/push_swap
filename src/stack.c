@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:25:50 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/24 22:36:46 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:00:13 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,17 @@
 #include "ft_error.h"
 #include <stdio.h>
 
-int	size(t_stack self)
-{
-	return self->top + 1;
-}
-
-int	is_empty(t_stack self)
-{
-	return self->top == -1;
-}
-
-int	is_full(t_stack self)
-{
-	return self->top == self->maxsize - 1;
-}
-
-void	push(t_stack self, int val)
-{
-	if (is_full(self))
-		error_exit(ERR_FULL_STACK_PUSH, DEFAULT_ERROR);
-	self->items[++self->top] = val;
-}
-
-int	peek(t_stack self)
-{
-	if (!is_empty(self))
-		return self->items[self->top];
-	return (error_exit(ERR_EMPTY_STACK_PEEK, DEFAULT_ERROR));
-}
-
 int	pop(t_stack self)
 {
 	if (!is_empty(self))
-		return self->items[self->top--];
+		return (self->items[self->top--]);
 	return (error_exit(ERR_EMPTY_STACK_POP, DEFAULT_ERROR));
 }
 
 t_stack	copy_stack(t_stack self)
 {
-	t_stack stack_cpy;
-	int i;
+	t_stack	stack_cpy;
+	int		i;
 
 	stack_cpy = new_stack(self->maxsize);
 	stack_cpy->top = self->top;
@@ -75,11 +46,12 @@ t_stack	copy_stack(t_stack self)
 
 t_stack	new_stack(int capacity)
 {
-	t_stack self = (t_stack)malloc(sizeof(struct s_stack));
+	t_stack	self;
 
+	self = (t_stack)malloc(sizeof(struct s_stack));
 	self->maxsize = capacity;
 	self->top = -1;
-	self->items = (int*)malloc(sizeof(int) * capacity);
+	self->items = (int *)malloc(sizeof(int) * capacity);
 	if (!self->items)
 		error_exit(ERR_NEW_STACK_MALLOC, FATAL_ERROR);
 	self->size = size;
@@ -94,10 +66,10 @@ t_stack	new_stack(int capacity)
 
 void	print_stack(t_stack self)
 {
-	int i;
+	int	i;
 
 	if (!self)
-		return ft_putendl_fd("    null_stack", STDERR_FILENO);
+		return (ft_putendl_fd("    null_stack", STDERR_FILENO));
 	i = self->top;
 	ft_putstr_fd("    ", STDERR_FILENO);
 	if (is_empty(self))
