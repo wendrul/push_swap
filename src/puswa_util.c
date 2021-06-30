@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/29 14:48:36 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 12:18:31 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char *exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
 	// print_stack(a);
 	// fprintf(stderr, "    b:\n");
 	// print_stack(b);
-
 	return (join_delete(ans, ft_strdup(buf)));
 }
 

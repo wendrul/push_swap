@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/29 15:11:52 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 12:16:26 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,8 +254,6 @@ int is_in_arr(int val, t_arr arr, int len)
 	return (0);
 }
 
-
-
 int gssa_arr(t_stack a, int **ret)
 {
 	int *arr;
@@ -268,7 +266,7 @@ int gssa_arr(t_stack a, int **ret)
 	*ret = NULL;
 	while (++i < a->size(a))
 	{
-		if (a->items[0] < max_val * 5)
+		if (a->items[0] < max_val * 1.2)
 			break;
 		arr = (int *)malloc(sizeof(int) * (a->size(a)));
 		if (!arr)
@@ -322,6 +320,28 @@ char *discard_in_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans)
 	return (ans);
 }
 
+char *discard_no_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans)
+{
+	int deleted;
+	int i;
+	int len;
+
+	i = -1;
+	deleted = 0;
+	len = a->size(a);
+	while (++i < len && a->size(a) > 2)
+		{
+			if (!is_in_arr(a->peek(a), to_keep, to_keep.size))
+			{
+				deleted++;
+				ans = exec_and_str_op(a, b, "pb", ans);
+			}
+			else
+				ans = exec_and_str_op(a, b, "ra", ans);
+		}
+	return (ans);
+}
+
 char *insert_sort2(t_stack a, t_stack b)
 {
 	char *ans;
@@ -350,12 +370,15 @@ char *insert_sort2(t_stack a, t_stack b)
 		to_keep.arr = NULL;
 		to_keep.size = 0;
 	}
-	ans = discard_in_chunks(a, b, to_keep, ans);
+	if (a->size(a) > 105)
+		ans = discard_in_chunks(a, b, to_keep, ans);
+	else
+		ans = discard_no_chunks(a, b, to_keep, ans);
 #ifdef VERBOSE_PUSH_SWAP
 	if (!is_cycle_sorted(a))
 		error_exit("Stack not sorted wtf", DEFAULT_ERROR);
 #endif
-	fprintf(stderr, "step 1 finished (get sorted cycle) [%d operations]\n", current_ops);
+	// fprintf(stderr, "step 1 finished (get sorted cycle) [%d operations]\n", current_ops);
 	//printf("you should place %d at index [%d] aka %d\n", b->items[0], where_to_place(a, b->items[0]), a->items[where_to_place(a, b->items[0])]);
 	// t_stack test;
 	// test = new_stack(20);
@@ -374,17 +397,18 @@ char *insert_sort2(t_stack a, t_stack b)
 		ans = rotate_to_pivot(a, b, rotations, ans);
 		ans = exec_and_str_op(a, b, "pa", ans);
 	}
-	fprintf(stderr, "step 2 finished (pivot to a) [%d operations]\n", current_ops);
-
-	while (!is_sorted_inc(a))
-		ans = exec_and_str_op(a, b, "rra", ans);
-	fprintf(stderr, "step 3 finished (rotate back)[%d operations]\n", current_ops);
+	// fprintf(stderr, "step 2 finished (pivot to a) [%d operations]\n", current_ops);
+	if (a->peek(a) > a->size(a) / 2)
+		while (!is_sorted_inc(a))
+			ans = exec_and_str_op(a, b, "ra", ans);
+	else
+		while (!is_sorted_inc(a))
+			ans = exec_and_str_op(a, b, "rra", ans);
+	// fprintf(stderr, "step 3 finished (rotate back)[%d operations]\n", current_ops);
 	delete_stack(&a);
 	delete_stack(&b);
 	return (ans);
 }
-
-
 
 char *geek_sort(t_stack a, t_stack b)
 {
