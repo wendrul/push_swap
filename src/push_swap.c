@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 16:07:21 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:37:11 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,41 +45,6 @@ void remove_instruction(char instructions[])
 	}
 }
 
-// char *brute_swap(t_stack a, t_stack b, char instructions[], char **operations, int depth)
-// {
-// 	t_stack a_cpy;
-// 	t_stack b_cpy;
-// 	int i;
-// 	char *ans;
-
-// 	ans = NULL;
-// 	if (depth > 12) //a->maxsize * 2 + 2)
-// 		return (NULL);
-// 	if (is_sorted_inc(a) && b->size(b) == 0)
-// 		return (ft_strdup(instructions));
-// 	i = -1;
-// 	while (++i < AMOUNT_OF_OPS)
-// 	{
-// 		//fprintf(stderr, "\nsssss\n%seeeeeee\n", instructions);
-// 		add_instruction(instructions, operations[i]);
-// 		a_cpy = a->copy(a);
-// 		b_cpy = b->copy(b);
-// //		printf("doing op %s :\n", operations[i]);
-// //		print_stack(a_cpy);
-// 		execute_op(a_cpy, b_cpy, operations[i]);
-// //		print_stack(a_cpy);
-// //		printf("---------------\n");
-// 		ans = brute_swap(a_cpy, b_cpy, instructions, operations, depth + 1);
-// 		delete_stack(&a_cpy);
-// 		delete_stack(&b_cpy);
-// 		if (ans)
-// 		{
-// 			break;
-// 		}
-// 		remove_instruction(instructions);
-// 	}
-// 	return (ans);
-// }
 
 #define AMOUNT_OF_OPS 8
 
@@ -209,8 +174,14 @@ int count_char(char *str, char c)
 	return (count);
 }
 
-void free_queue(t_queue q)
+void free_queue(t_queue q, char **ops)
 {
+	int i;
+
+	i= -1;
+	while (ops[++i])
+		free(ops[i]);	
+	free(ops);
 	while (!is_qempty(q))
 	{
 		free(dequeue(q));
@@ -218,13 +189,15 @@ void free_queue(t_queue q)
 	free(q);
 }
 
-char *brute_swap2(t_stack a, t_stack b, char **operations)
+char *brute_swap2(t_stack a, t_stack b)
 {
 	int i;
 	t_queue q;
 	char *tmp;
 	char *tmp2;
+	char **operations;
 
+	operations = ft_split_charset("sa\n, sb\n, pa\n, pb\n, ra\n, rb\n, rra\n, rrb\n", ", ");
 	tmp = ft_strdup("");
 	q = create_queue();
 	if (!q || !tmp)
@@ -238,7 +211,7 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 			break;
 		if (test_instructions(a->copy(a), b->copy(b), tmp))
 		{
-			free_queue(q);
+			free_queue(q, operations);
 			return (tmp);
 		}
 		i = -1;
@@ -255,13 +228,12 @@ char *brute_swap2(t_stack a, t_stack b, char **operations)
 		}
 		free(tmp);
 	}
-	free_queue(q);
+	free_queue(q, operations);
 	return (NULL);
 }
 
 void push_swap(t_stack a, t_stack b)
 {
-	char *ops[] = {"sa\n", "sb\n", "pa\n", "pb\n", "ra\n", "rb\n", "rra\n", "rrb\n"};
 	char *ans;
 	char *ans2;
 	t_sort_algo sort_algo_list[AMOUNT_OF_SORTS + 1];
@@ -272,12 +244,11 @@ void push_swap(t_stack a, t_stack b)
 	sort_algo_list[2] = bubble_sort;
 	sort_algo_list[3] = NULL;
 
-	(void)ops;
 	ans = NULL;
 	if (a->size(a) > 5)
 		sort_algo_list[1] = NULL;
 	else
-		ans = brute_swap2(a, b, ops);
+		ans = brute_swap2(a, b);
 	if (ans)
 		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
