@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_ops2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:45:57 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/20 11:17:55 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/06/30 19:06:34 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	op_swap(t_stack s)
 {
-	int nb1;
-	int nb2;
+	int	nb1;
+	int	nb2;
 
 	if (s->size(s) > 1)
 	{
@@ -36,11 +36,11 @@ void	op_push(t_stack from, t_stack to)
 
 void	op_rotate(t_stack s)
 {
-	int tmp;
-	int i;
+	int	tmp;
+	int	i;
 
 	if (s->size(s) <= 1)
-		return;
+		return ;
 	i = s->top;
 	tmp = s->items[s->top];
 	while (i > 0)
@@ -53,11 +53,11 @@ void	op_rotate(t_stack s)
 
 void	op_rev_rotate(t_stack s)
 {
-	int tmp;
-	int i;
+	int	tmp;
+	int	i;
 
 	if (s->size(s) <= 1)
-		return;
+		return ;
 	i = 0;
 	tmp = s->items[0];
 	while (i < s->top)
@@ -68,4 +68,16 @@ void	op_rev_rotate(t_stack s)
 	s->items[s->top] = tmp;
 }
 
+int	is_already_in_stack(int nb, t_stack s)
+{
+	int	i;
 
+	i = s->top;
+	while (i >= 0)
+	{
+		if (nb == s->items[i])
+			return (1);
+		i--;
+	}
+	return (0);
+}
