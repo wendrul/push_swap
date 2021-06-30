@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/30 16:20:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 18:42:17 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ int gssa_arr(t_stack a, int **ret)
 	int val;
 	int max_val;
 	int i;
+	t_arr items;
 
 	i = -1;
 	max_val = 0;
@@ -216,8 +217,10 @@ int gssa_arr(t_stack a, int **ret)
 		arr = (int *)malloc(sizeof(int) * (a->size(a)));
 		if (!arr)
 			error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
+		items.arr = a->items;
+		items.size = a->size(a);
 		arr[0] = a->items[0];
-		val = gssa(a->items, &arr, 1, 0, a->size(a));
+		val = gssa(items, &arr, 1, 0);
 		if (val > max_val)
 		{
 			max_val = val;

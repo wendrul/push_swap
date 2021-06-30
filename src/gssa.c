@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:37:26 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/28 17:45:52 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 18:40:51 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void print_arr(int *arr, int size)
     ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-int gssa(int *arr, int **ret, int value, int cur_pos, int len)
+int gssa(t_arr items, int **ret, int value, int cur_pos)
 {
     static int max_val = 0;
     static int *max_arr = NULL;
@@ -37,21 +37,21 @@ int gssa(int *arr, int **ret, int value, int cur_pos, int len)
     int new_val;
 
     if (max_arr == NULL)
-        max_arr = (int *)malloc(sizeof(int) * len);
+        max_arr = (int *)malloc(sizeof(int) * items.size);
     if (max_arr == NULL)
         error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
-    if (value != 1 && (arr[cur_pos] <= 1 || cur_pos >= len))
+    if (value != 1 && (items.arr[cur_pos] <= 1 || cur_pos >= items.size))
         return (value);
     i = cur_pos;
-    while (++i < len)
+    while (++i < items.size)
     {
-        if (arr[i] < arr[cur_pos])
+        if (items.arr[i] < items.arr[cur_pos])
         {
-            potential = ft_min(arr[i], len - i);
+            potential = ft_min(items.arr[i], items.size - i);
             if (potential > max_val)
             {
-                (*ret)[value] = arr[i];
-                new_val = gssa(arr, ret, value + 1, i, len);
+                (*ret)[value] = items.arr[i];
+                new_val = gssa(items, ret, value + 1, i);
                 if (new_val > max_val)
                 {
                     max_val = new_val;

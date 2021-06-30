@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:20:02 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/30 16:47:09 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 18:44:20 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ char	*bubble_sort(t_stack a, t_stack b)
 static char	*sort_3(t_stack a, char *ans)
 {
 	t_stack	empty;
+	char	*tmp;
 
 	empty = new_stack(a->maxsize);
-	ans = brute_swap2(a, empty);
+	tmp = ft_strjoin(ans, brute_swap2(a, empty));
+	if (!tmp)
+		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
 	delete_stack(&empty);
-	return (ans);
+	return (tmp);
 }
 
 char	*insert_sort1(t_stack a, t_stack b)
