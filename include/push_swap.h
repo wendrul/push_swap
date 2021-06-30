@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 18:40:47 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:28:17 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char		*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans);
 
 int         gssa(t_arr items, int **ret, int value, int cur_pos);
 void        print_arr(int *arr, int size);
+int ft_abs(int n);
 
 char    *bubble_sort(t_stack a, t_stack b);
 char	*insert_sort1(t_stack a, t_stack b);

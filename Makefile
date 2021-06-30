@@ -6,22 +6,23 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/06/30 19:05:22 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/06/30 19:15:21 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		=	src/push_swap.c\
 				src/stack.c\
+				src/stack2.c\
 				src/ft_error.c\
 				src/puswa_util.c\
+				src/puswa_util2.c\
 				src/parse_stack.c\
 				src/stack_ops.c\
 				src/stack_ops2.c\
 				src/queue.c\
 				src/sorts1.c\
 				src/sorts.c\
-				src/gssa.c\
-				src/stack2.c
+				src/gssa.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f

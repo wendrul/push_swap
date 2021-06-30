@@ -6,32 +6,29 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 14:24:10 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:15:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int puswa_error(char *msg)
+int	puswa_error(char *msg)
 {
 	ft_putendl_fd("Error", STDERR_FILENO);
-#ifdef VERBOSE_PUSH_SWAP
-	ft_putendl_fd(msg, STDERR_FILENO);
-#endif
 	(void)msg;
 	exit(0);
 }
 
-int name_cmp(char *s1, char *s2)
+int	name_cmp(char *s1, char *s2)
 {
 	return (0 == ft_strncmp(s1, s2, ft_max(ft_strlen(s1), ft_strlen(s2))));
 }
 
-int is_number(char *nbr_str)
+int	is_number(char *nbr_str)
 {
-	int nb;
-	char *test_nb;
-	int ans;
+	int		nb;
+	char	*test_nb;
+	int		ans;
 
 	nb = ft_atoi(nbr_str);
 	test_nb = ft_itoa(nb);
@@ -46,9 +43,9 @@ int is_number(char *nbr_str)
 	return (ans);
 }
 
-char *join_delete(char *str1, char *str2)
+char	*join_delete(char *str1, char *str2)
 {
-	char *ret;
+	char	*ret;
 
 	if (str1 == NULL || str2 == NULL)
 		return (NULL);
@@ -62,10 +59,10 @@ char *join_delete(char *str1, char *str2)
 	return (ret);
 }
 
-char *exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
+char	*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
 {
-	char buf[20];
-	int i;
+	char	buf[20];
+	int		i;
 
 	current_ops++;
 	i = -1;
@@ -74,42 +71,5 @@ char *exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
 	buf[i] = '\n';
 	buf[i + 1] = '\0';
 	execute_op(a, b, op);
-
-	// fprintf(stderr, "%s:\n", op);
-	// fprintf(stderr, "    a:\n");
-	// print_stack(a);
-	// fprintf(stderr, "    b:\n");
-	// print_stack(b);
 	return (join_delete(ans, ft_strdup(buf)));
 }
-
-int get_index(int *arr, int size, int element)
-{
-	int i;
-	int amount_smaller;
-
-	i = -1;
-	amount_smaller = 0;
-	while (++i < size)
-	{
-		if (arr[i] < element)
-			amount_smaller++;
-	}
-	return (amount_smaller);
-}
-
-t_stack indexify_stack(t_stack s)
-{
-	t_stack idx;
-	int i;
-
-	idx = s->copy(s);
-	i = -1;
-	while (++i < s->size(s))
-	{
-		idx->items[i] = get_index(s->items, s->size(s), s->items[i]) + 1;
-	}
-	return (idx);
-}
-
-
