@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 19:15:37 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:41:57 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans)
 	char	buf[20];
 	int		i;
 
-	current_ops++;
 	i = -1;
 	while (op[++i])
 		buf[i] = op[i];

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 19:28:17 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:42:01 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@
 # define AMOUNT_OF_OPS 8
 # define MAX_BFS_DEPTH 5
 
-
+# define AMOUNT_OF_OPS 8
 # define NUMBER_OF_CHUNKS 3
+# define OPERATIONS "sa\n, sb\n, pa\n, pb\n, ra\n, rb\n, rra\n, rrb\n"
 
 
 typedef struct  s_cost {
@@ -53,8 +54,6 @@ typedef struct s_arr
 
 
 typedef char* (*t_sort_algo)(t_stack a, t_stack b);
-
-int current_ops;
 
 int			puswa_error(char *msg);
 int			is_number(char *nbr_str);

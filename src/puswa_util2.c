@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 19:14:32 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/30 19:21:02 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 19:43:12 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ t_stack	indexify_stack(t_stack s)
 	return (idx);
 }
 
-int ft_abs(int n)
+int	ft_abs(int n)
 {
 	if (n > 0)
 		return (n);
 	return (-n);
 }
-
