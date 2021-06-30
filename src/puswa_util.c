@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:47:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 12:18:31 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 14:24:10 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int puswa_error(char *msg)
 #ifdef VERBOSE_PUSH_SWAP
 	ft_putendl_fd(msg, STDERR_FILENO);
 #endif
+	(void)msg;
 	exit(0);
 }
 

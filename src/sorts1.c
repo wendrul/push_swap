@@ -6,50 +6,11 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/30 12:16:26 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:07:02 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-char *bounce_sort(t_stack a, t_stack b)
-{
-	char *ans;
-	int i;
-	int going_up;
-
-	ans = ft_strdup("");
-	i = 0;
-	going_up = 1;
-	while (!is_sorted_inc(a))
-	{
-		if (going_up)
-		{
-			/* This is exactly the same as down there on bubble*/
-			if (i < a->size(a) - 1 && a->items[a->top] > a->items[a->top - 1])
-				ans = exec_and_str_op(a, b, "sa", ans);
-			if (is_sorted_inc(a))
-				break;
-			ans = exec_and_str_op(a, b, "ra", ans);
-			if (++i >= a->size(a))
-				going_up = 0;
-		}
-		else
-		{
-			if (a->items[a->top] > a->items[a->top - 1])
-				ans = exec_and_str_op(a, b, "sa", ans);
-			if (is_sorted_inc(a))
-				break;
-			if (i > 1)
-				ans = exec_and_str_op(a, b, "rra", ans);
-			if (--i <= 0)
-				going_up = 1;
-		}
-	}
-	delete_stack(&a);
-	delete_stack(&b);
-	return (ans);
-}
 
 char *bubble_sort(t_stack a, t_stack b)
 {
@@ -109,7 +70,37 @@ char *insert_sort1(t_stack a, t_stack b)
 	return (ans);
 }
 
-int rotations_till_push(const t_stack s_original, int c, int rotation_dir)
+int rotations_till_push(const t_stack s, int c, int rotation_dir)
+{
+	int i;
+	int should_get_to_top;
+	int min_index;
+	static int cc = 0;
+
+	min_index = stack_min_index(s);
+	should_get_to_top = -1;
+	i = 0;
+	if (c < s->items[min_index])
+		should_get_to_top = min_index;
+	else
+		while (++i < s->size(s) + 1)
+		{
+			if (should_get_to_top == -1 && s->items[(min_index + i) % s->size(s)] < c)
+				should_get_to_top = (min_index + i - 1) % s->size(s);
+		}
+	cc++;
+	// fprintf(stderr, "placing %d from b to a:\n", c);
+	// print_stack(s);
+	// fprintf(stderr, "chosen index: %d\n\n\n\n", should_get_to_top);
+	// if (cc >= 3)
+	// 	exit(0);
+	if (rotation_dir < 0)
+		return (-((should_get_to_top + 1) % s->size(s)));
+	else
+		return (s->top - should_get_to_top);
+}
+
+int rotations_till_push_old(const t_stack s_original, int c, int rotation_dir)
 {
 	t_stack s;
 	int rrs;
@@ -174,8 +165,10 @@ t_cost get_cost(t_stack a, t_stack b, int p_index)
 	cost_rr.for_b = b->top - p_index;
 
 	cost_rrr.for_a = rotations_till_push(a, b->items[p_index], -1);
-	cost_rrr.for_b = -(p_index + 1);
+	cost_rrr.for_b = -((p_index + 1) % b->size(b));
 
+	if (a->size(a) <= 2)
+		return (cost_rr);
 	return (lesser_cost(cost_rr, cost_rrr));
 }
 
@@ -183,16 +176,26 @@ t_cost find_best_pivot(t_stack a, t_stack b)
 {
 	int i;
 	t_cost min_cost;
+	int chunk;
 
 #ifdef VERBOSE_PUSH_SWAP
 	if (a->is_empty(a) || b->is_empty(b))
 		error_exit("wtf can't find pivot on an empty stack", DEFAULT_ERROR);
 #endif
-
-	min_cost = get_cost(a, b, 0);
-	i = -1;
-	while (++i < b->size(b))
-		min_cost = lesser_cost(min_cost, get_cost(a, b, i));
+	min_cost.for_a = 10 * a->maxsize;
+	min_cost.for_b = 10 * a->maxsize;
+	chunk = NUMBER_OF_CHUNKS - 1;
+	// if (a->maxsize > 105)
+	// 	chunk = 0;
+	while (++chunk <= NUMBER_OF_CHUNKS)
+	{
+		i = -1;
+		while (++i < b->size(b))
+		{
+			if (b->items[i] < chunk * (1 + (a->maxsize / NUMBER_OF_CHUNKS)))
+				min_cost = lesser_cost(min_cost, get_cost(a, b, i));
+		}
+	}
 	return (min_cost);
 }
 
@@ -329,19 +332,79 @@ char *discard_no_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans)
 	i = -1;
 	deleted = 0;
 	len = a->size(a);
-	while (++i < len && a->size(a) > 2)
+	while (++i < len && a->size(a) > 2 && deleted < (len - to_keep.size))
+	{
+		if (!is_in_arr(a->peek(a), to_keep, to_keep.size))
 		{
-			if (!is_in_arr(a->peek(a), to_keep, to_keep.size))
-			{
-				deleted++;
-				ans = exec_and_str_op(a, b, "pb", ans);
-			}
-			else
-				ans = exec_and_str_op(a, b, "ra", ans);
+			deleted++;
+			ans = exec_and_str_op(a, b, "pb", ans);
 		}
+		else
+			ans = exec_and_str_op(a, b, "ra", ans);
+	}
 	return (ans);
 }
 
+int find_decent_pos(t_arr list)
+{
+	int best_length = 0;
+	int best_pos;
+	int length;
+	int prev;
+	int i;
+	int j;
+
+	best_length = 0;
+	i = -1;
+	while (++i < list.size)
+	{
+		length = 1;
+		prev = list.arr[i];
+		j = -1;
+		while (++j < list.size)
+		{
+			if (list.arr[(i + j) % list.size] < prev)
+			{
+				prev = list.arr[(i + j) % list.size];
+				length++;
+			}
+		}
+		if (length > best_length)
+		{
+			best_pos = i;
+			best_length = length;
+		}
+	}
+	return (best_pos);
+}
+
+int ge_gssa_arr(t_stack a, t_arr *to_keep)
+{
+	int pos;
+	t_arr list;
+	int i;
+	int prev;
+
+	list.arr = a->items;
+	list.size = a->size(a);
+	pos = find_decent_pos(list);
+	to_keep->arr = (int*)malloc(sizeof(int) * a->size(a));
+	to_keep->size = 0;
+	if (!to_keep->arr)
+		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
+	i = -1;
+	prev = -1;
+	while (++i < a->size(a))
+	{
+		if (prev == -1 || prev > a->items[(pos + i) % a->size(a)])
+		{
+			to_keep->arr[to_keep->size] = a->items[(pos + i) % a->size(a)];
+			to_keep->size++;
+			prev = a->items[(pos + i) % a->size(a)];
+		}
+	}
+	return (to_keep->size);
+}
 char *insert_sort2(t_stack a, t_stack b)
 {
 	char *ans;
@@ -367,8 +430,7 @@ char *insert_sort2(t_stack a, t_stack b)
 	}
 	else
 	{
-		to_keep.arr = NULL;
-		to_keep.size = 0;
+		to_keep.size = ge_gssa_arr(a, &to_keep);
 	}
 	if (a->size(a) > 105)
 		ans = discard_in_chunks(a, b, to_keep, ans);
@@ -405,28 +467,6 @@ char *insert_sort2(t_stack a, t_stack b)
 		while (!is_sorted_inc(a))
 			ans = exec_and_str_op(a, b, "rra", ans);
 	// fprintf(stderr, "step 3 finished (rotate back)[%d operations]\n", current_ops);
-	delete_stack(&a);
-	delete_stack(&b);
-	return (ans);
-}
-
-char *geek_sort(t_stack a, t_stack b)
-{
-	char *ans;
-	int tmp;
-
-	ans = ft_strdup("");
-	while (!a->is_empty(a))
-	{
-		tmp = a->peek(a);
-		ans = exec_and_str_op(a, b, "pb", ans);
-		ans = exec_and_str_op(a, b, "rb", ans);
-		while (!b->is_empty(b) && b->peek(b) > tmp)
-			ans = exec_and_str_op(a, b, "pa", ans);
-		ans = exec_and_str_op(a, b, "rrb", ans);
-	}
-	while (!b->is_empty(b))
-		ans = exec_and_str_op(a, b, "pa", ans);
 	delete_stack(&a);
 	delete_stack(&b);
 	return (ans);

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 12:21:59 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/06/30 16:07:21 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void remove_instruction(char instructions[])
 // 	}
 // 	return (ans);
 // }
-
 
 #define AMOUNT_OF_OPS 8
 
@@ -269,15 +268,16 @@ void push_swap(t_stack a, t_stack b)
 	int i;
 
 	sort_algo_list[0] = insert_sort2;
-	sort_algo_list[1] = geek_sort;
+	sort_algo_list[1] = insert_sort1;
 	sort_algo_list[2] = bubble_sort;
-	sort_algo_list[3] = insert_sort1;
-	sort_algo_list[1] = NULL;
+	sort_algo_list[3] = NULL;
 
 	(void)ops;
-	// ans = brute_swap2(a, b, ops);
-	// free(ans);
 	ans = NULL;
+	if (a->size(a) > 5)
+		sort_algo_list[1] = NULL;
+	else
+		ans = brute_swap2(a, b, ops);
 	if (ans)
 		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
@@ -290,7 +290,6 @@ void push_swap(t_stack a, t_stack b)
 			{
 				free(ans);
 				ans = ans2;
-				//fprintf(stderr, "algo %d is better\n", i);
 			}
 			else
 				free(ans2);
