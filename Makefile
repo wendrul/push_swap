@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/06/30 19:15:21 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/07/01 11:02:15 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS		=	src/push_swap.c\
 				src/queue.c\
 				src/sorts1.c\
 				src/sorts.c\
-				src/gssa.c
+				src/gssa.c\
+				src/brute.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
