@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:53:14 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/16 13:08:33 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/07/01 10:48:13 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 
 # define ITOA_MALLOC_FAIL "malloc failed on ft_itoa"
 
-int error_exit(char *msg, int exit_code);
+int		error_exit(char *msg, int exit_code);
 
 #endif
