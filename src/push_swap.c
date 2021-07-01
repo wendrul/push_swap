@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/01 11:11:06 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 11:23:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ void	choose_algo(t_sort_algo *sort_list, t_stack a, t_stack b, char *ans)
 void	push_swap(t_stack a, t_stack b)
 {
 	char		*ans;
-	char		*ans2;
 	t_sort_algo	sort_algo_list[AMOUNT_OF_SORTS + 1];
-	int			i;
 
 	sort_algo_list[0] = insert_sort2;
 	sort_algo_list[1] = insert_sort1;
@@ -90,9 +88,7 @@ void	push_swap(t_stack a, t_stack b)
 	if (ans)
 		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
-	{
 		choose_algo(sort_algo_list, a, b, ans);
-	}
 	free(ans);
 }
 

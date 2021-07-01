@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 19:14:32 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/30 19:43:12 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 12:24:52 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,19 @@ int	ft_abs(int n)
 	if (n > 0)
 		return (n);
 	return (-n);
+}
+
+int	is_in_arr(int val, t_arr arr, int len)
+{
+	int	i;
+
+	if (!arr.arr)
+		return (0);
+	i = -1;
+	while (++i < len)
+	{
+		if (val == arr.arr[i])
+			return (1);
+	}
+	return (0);
 }

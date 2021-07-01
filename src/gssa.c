@@ -6,24 +6,38 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:37:26 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/07/01 10:42:25 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 11:32:15 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_arr(int *arr, int size)
+int	ge_gssa_arr(t_stack a, t_arr *to_keep)
 {
-	int	i;
+	int		pos;
+	t_arr	list;
+	int		i;
+	int		prev;
 
+	list.arr = a->items;
+	list.size = a->size(a);
+	pos = find_decent_pos(list);
+	to_keep->arr = (int *)malloc(sizeof(int) * a->size(a));
+	to_keep->size = 0;
+	if (!to_keep->arr)
+		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
 	i = -1;
-	while (++i < size)
+	prev = -1;
+	while (++i < a->size(a))
 	{
-		ft_putstr_fd("[  ", STDERR_FILENO);
-		ft_putnbr_fd(arr[i], STDERR_FILENO);
-		ft_putstr_fd(" ] ", STDERR_FILENO);
+		if (prev == -1 || prev > a->items[(pos + i) % a->size(a)])
+		{
+			to_keep->arr[to_keep->size] = a->items[(pos + i) % a->size(a)];
+			to_keep->size++;
+			prev = a->items[(pos + i) % a->size(a)];
+		}
 	}
-	ft_putstr_fd("\n", STDERR_FILENO);
+	return (to_keep->size);
 }
 
 static int	gssa_ret(int value, int **ret, int **max_arr, int *max_val)

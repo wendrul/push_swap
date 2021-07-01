@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/01 11:11:27 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 12:34:53 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int			name_cmp(char *s1, char *s2);
 int			ft_abs(int n);
 int			count_char(char *str, char c);
 int			get_last_op(char *instructions, char last_op_buf[]);
+int			is_in_arr(int val, t_arr arr, int len);
 
 int			is_already_in_stack(int nb, t_stack s);
 int			is_sorted_inc(t_stack s);
@@ -78,11 +79,17 @@ void		execute_op(t_stack a, t_stack b, char *op);
 char		*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans);
 
 int			gssa(t_arr items, int **ret, int value, int cur_pos);
-void		print_arr(int *arr, int size);
+int			ge_gssa_arr(t_stack a, t_arr *to_keep);
+int			find_decent_pos(t_arr list);
 
 char		*bubble_sort(t_stack a, t_stack b);
 char		*insert_sort1(t_stack a, t_stack b);
 char		*insert_sort2(t_stack a, t_stack b);
 char		*brute_swap2(t_stack a, t_stack b);
+
+t_cost		find_best_pivot(t_stack a, t_stack b);
+char		*rotate_to_pivot(t_stack a, t_stack b, t_cost rotations, char *ans);
+char		*discard_in_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans);
+char		*discard_no_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans);
 
 #endif
