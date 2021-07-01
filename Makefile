@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/07/01 12:35:31 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/07/01 13:32:40 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,34 @@ SRCS		=	src/push_swap.c\
 				src/brute.c\
 				src/cost_management.c\
 				src/spinny_wheely.c\
+				src/puswa_util3.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
 
 NAME		=	push_swap
+CH_NAME		=	checker
+
+CH_SRCS		=	src/checker.c\
+				src/stack.c\
+				src/stack2.c\
+				src/ft_error.c\
+				src/puswa_util.c\
+				src/puswa_util2.c\
+				src/parse_stack.c\
+				src/stack_ops.c\
+				src/stack_ops2.c\
+				src/queue.c\
+				src/sorts1.c\
+				src/sorts2.c\
+				src/sorts.c\
+				src/gssa.c\
+				src/brute.c\
+				src/cost_management.c\
+				src/spinny_wheely.c\
+				src/gnl/get_next_line.c\
+				src/gnl/get_next_line_utils.c\
+				src/puswa_util3.c
 
 # **************************************************************************** #
 
@@ -50,7 +73,9 @@ LFT_RULE	=	$(LFT_PATH)/$(LFT_NAME)
 # **************************************************************************** #
 
 OBJS		=	$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+CH_OBJS		=	$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(CH_SRCS))
 OBJS_NODIR	=	$(patsubst %.o, $(OBJ_DIR)/%.o, $(notdir $(OBJS)))
+CH_OBJS_NODIR	=	$(patsubst %.o, $(OBJ_DIR)/%.o, $(notdir $(CH_OBJS)))
 
 LIB			=	$(LFT_LIB) -lncurses
 INC			=	-I $(INC_DIR) $(LFT_INC)
@@ -69,7 +94,7 @@ CFLAGS		=	-Wall -Wextra -Werror
 CC			=	clang
 
 
-all:			${NAME}
+all:			${NAME} $(CH_NAME)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(INC_DIR)/
 				@$(MKDIR_P) $(OBJ_DIR)
@@ -88,17 +113,22 @@ $(NAME):		$(LFT_RULE) $(OBJS)
 				@$(CC) $(CFLAGS) $(OBJS_NODIR) -o $@ $(INC) $(LIB)
 				@echo "$(CYAN)Created $(GREEN)$(NAME)$(CYAN)!! $(RESET)"
 
+$(CH_NAME):		$(LFT_RULE) $(CH_OBJS)
+				@printf "$(YELLOW)Done creating $(CH_NAME) object files!\n$(RESET)"
+				@$(CC) $(CFLAGS) $(CH_OBJS_NODIR) -o $@ $(INC) $(LIB)
+				@echo "$(YELLOW)Created $(GREEN)$(CH_NAME)$(YELLOW)!! $(RESET)"
 $(LFT_RULE):
 				@make -C $(LFT_PATH)/
 
 clean: 
-				@${RM} ${OBJS_NODIR}
+				@${RM} ${OBJS_NODIR} ${CH_OBJS_NODIR}
 				@$(MKDIR_P) $(OBJ_DIR)
 				@rmdir -p $(OBJ_DIR)
 				@echo "$(CYAN)CLEANING$(RESET)"
 
 fclean:			clean
 				@${RM} ${NAME}
+				@${RM} ${CH_NAME}
 				@make -C $(LFT_PATH) fclean
 				@echo "$(CYAN)Everything is $(RED)c $(YELLOW)l $(GREEN)e $(CYAN)a $(MAGENTA)n $(RESET)"
 				
@@ -163,4 +193,4 @@ together:		all
 				@echo "$(YELLOW)║ ║├─┤  └┬┘├┤ ├─┤├─┤    │ │ └─┐  ├─┤│  │    │  │ │││││││││ ┬   │ │ ││ ┬├┤  │ ├─┤├┤ ├┬┘$(RESET)"
 				@echo "$(YELLOW)╚═╝┴ ┴   ┴ └─┘┴ ┴┴ ┴┘,  ┴ ┴ └─┘  ┴ ┴┴─┘┴─┘  └─┘└─┘┴ ┴┴┘└┘└─┘   ┴ └─┘└─┘└─┘ ┴ ┴ ┴└─┘┴└─$(RESET)"
 
-.PHONY:	all clean fclean test re together
+.PHONY:	all clean fclean test re together bonus

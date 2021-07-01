@@ -6,52 +6,13 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/01 11:23:36 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 13:41:20 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	get_last_op(char *instructions, char last_op_buf[])
-{
-	int	i;
-	int	j;
-
-	i = ft_strlen(instructions) - 2;
-	if (i < 0)
-		return (0);
-	while (i > 0 && instructions[i] != '\n')
-	{
-		i--;
-	}
-	if (instructions[i] == '\n')
-		i++;
-	j = 0;
-	while (instructions[i] != '\n')
-	{
-		last_op_buf[j] = instructions[i];
-		i++;
-		j++;
-	}
-	last_op_buf[j] = '\0';
-	return (1);
-}
-
-int	count_char(char *str, char c)
-{
-	int	count;
-
-	count = 0;
-	while (*str)
-	{
-		if (*str == c)
-			count++;
-		str++;
-	}
-	return (count);
-}
-
-void	choose_algo(t_sort_algo *sort_list, t_stack a, t_stack b, char *ans)
+static void	choose_algo(t_sort_algo *sort_list, t_stack a, t_stack b, char *ans)
 {
 	int		i;
 	char	*ans2;
@@ -71,7 +32,7 @@ void	choose_algo(t_sort_algo *sort_list, t_stack a, t_stack b, char *ans)
 	ft_putstr_fd(ans, STDOUT_FILENO);
 }
 
-void	push_swap(t_stack a, t_stack b)
+static void	push_swap(t_stack a, t_stack b)
 {
 	char		*ans;
 	t_sort_algo	sort_algo_list[AMOUNT_OF_SORTS + 1];

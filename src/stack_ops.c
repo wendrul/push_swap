@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:29:10 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/30 19:08:58 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 13:35:34 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	stack_min_index(t_stack s)
 	return (min_index);
 }
 
-static void	exec_op_aux(t_stack a, t_stack b, char *op)
+static int	exec_op_aux(t_stack a, t_stack b, char *op)
 {
 	if (name_cmp(op, "ss"))
 	{
@@ -80,13 +80,11 @@ static void	exec_op_aux(t_stack a, t_stack b, char *op)
 		op_rev_rotate(b);
 	}
 	else
-	{
-		ft_putstr_fd(op, STDERR_FILENO);
-		ft_putendl_fd(": did not match any operations", STDERR_FILENO);
-	}
+		return (0);
+	return (1);
 }
 
-void	execute_op(t_stack a, t_stack b, char *op)
+int	execute_op(t_stack a, t_stack b, char *op)
 {
 	if (name_cmp(op, "sa"))
 		op_swap(a);
@@ -105,5 +103,6 @@ void	execute_op(t_stack a, t_stack b, char *op)
 	else if (name_cmp(op, "rrb"))
 		op_rev_rotate(b);
 	else
-		exec_op_aux(a, b, op);
+		return (exec_op_aux(a, b, op));
+	return (1);
 }

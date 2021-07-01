@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:19:55 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/01 12:34:53 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 13:14:22 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define VERBOSE_PUSH_SWAP
 # define ARG_NOT_NUMBER "argument is not a number"
 # define ARG_DUPLICATE "argument is duplicate"
+# define INVALID_OP "invalid operation"
 # define AMOUNT_OF_SORTS 10
 # define AMOUNT_OF_OPS 8
 # define MAX_BFS_DEPTH 5
@@ -75,7 +76,7 @@ t_stack		parse_stack(int argc, char **argv);
 t_stack		indexify_stack(t_stack s);
 
 char		*join_delete(char *str1, char *str2);
-void		execute_op(t_stack a, t_stack b, char *op);
+int			execute_op(t_stack a, t_stack b, char *op);
 char		*exec_and_str_op(t_stack a, t_stack b, char *op, char *ans);
 
 int			gssa(t_arr items, int **ret, int value, int cur_pos);
