@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:20:02 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/06/30 18:44:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 13:53:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static char	*sort_3(t_stack a, char *ans)
 	tmp = ft_strjoin(ans, brute_swap2(a, empty));
 	if (!tmp)
 		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
+	free(ans);
+	ans = NULL;
 	delete_stack(&empty);
 	return (tmp);
 }

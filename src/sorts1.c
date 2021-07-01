@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/07/01 12:51:45 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 13:45:44 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ char	*insert_sort2(t_stack a, t_stack b)
 			ans = exec_and_str_op(a, b, "rra", ans);
 	delete_stack(&a);
 	delete_stack(&b);
+	free(to_keep.arr);
 	return (ans);
 }

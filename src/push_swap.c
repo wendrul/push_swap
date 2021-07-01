@@ -6,30 +6,32 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:21:45 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/01 13:41:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 13:58:24 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	choose_algo(t_sort_algo *sort_list, t_stack a, t_stack b, char *ans)
+static void	choose_algo(t_sort_algo *sorts, t_stack a, t_stack b, char **ans)
 {
 	int		i;
 	char	*ans2;
 
 	i = -1;
-	while (sort_list[++i])
+	while (sorts[++i])
 	{
-		ans2 = sort_list[i](a->copy(a), b->copy(b));
-		if (!ans || count_char(ans, '\n') > count_char(ans2, '\n'))
+		ans2 = sorts[i](a->copy(a), b->copy(b));
+		if (!*ans || count_char(*ans, '\n') > count_char(ans2, '\n'))
 		{
-			free(ans);
-			ans = ans2;
+			free(*ans);
+			*ans = ans2;
 		}
 		else
 			free(ans2);
 	}
-	ft_putstr_fd(ans, STDOUT_FILENO);
+	ft_putstr_fd(*ans, STDOUT_FILENO);
+	free(*ans);
+	*ans = NULL;
 }
 
 static void	push_swap(t_stack a, t_stack b)
@@ -49,7 +51,7 @@ static void	push_swap(t_stack a, t_stack b)
 	if (ans)
 		ft_putstr_fd(ans, STDOUT_FILENO);
 	else
-		choose_algo(sort_algo_list, a, b, ans);
+		choose_algo(sort_algo_list, a, b, &ans);
 	free(ans);
 }
 
