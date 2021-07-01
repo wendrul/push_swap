@@ -41,6 +41,12 @@ int	find_decent_pos(t_arr list)
 	return (best_pos);
 }
 
+static int	fuck_la_norme(t_stack a, t_stack b, char **ans)
+{
+	*ans = exec_and_str_op(a, b, "pb", *ans);
+	return (1);
+}
+
 char	*discard_in_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans)
 {
 	int	initial_stack_len;
@@ -60,10 +66,7 @@ char	*discard_in_chunks(t_stack a, t_stack b, t_arr to_keep, char *ans)
 		{
 			if (!is_in_arr(a->peek(a), to_keep, to_keep.size) && a->peek(a)
 				<= chunk * (1 + (initial_stack_len / NUMBER_OF_CHUNKS)))
-			{
-				deleted++;
-				ans = exec_and_str_op(a, b, "pb", ans);
-			}
+				deleted += fuck_la_norme(a, b, &ans);
 			else
 				ans = exec_and_str_op(a, b, "ra", ans);
 		}

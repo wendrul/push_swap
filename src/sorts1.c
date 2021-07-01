@@ -6,11 +6,34 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 09:51:01 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/07/01 12:27:12 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/07/01 12:51:45 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static int	*setup_arr(t_stack a, t_arr *items)
+{
+	int	*arr;
+
+	arr = (int *)malloc(sizeof(int) * (a->size(a)));
+	if (!arr)
+		error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
+	items->arr = a->items;
+	items->size = a->size(a);
+	arr[0] = a->items[0];
+	return (arr);
+}
+
+static int	new_max(int val, int **ret, int *arr)
+{
+	int	max_val;
+
+	max_val = val;
+	free(*ret);
+	*ret = arr;
+	return (max_val);
+}
 
 int	gssa_arr(t_stack a, int **ret)
 {
@@ -27,19 +50,10 @@ int	gssa_arr(t_stack a, int **ret)
 	{
 		if (a->items[0] < max_val * 1.2)
 			break ;
-		arr = (int *)malloc(sizeof(int) * (a->size(a)));
-		if (!arr)
-			error_exit(MALLOC_FAIL_ERROR, FATAL_ERROR);
-		items.arr = a->items;
-		items.size = a->size(a);
-		arr[0] = a->items[0];
+		arr = setup_arr(a, &items);
 		val = gssa(items, &arr, 1, 0);
 		if (val > max_val)
-		{
-			max_val = val;
-			free(*ret);
-			*ret = arr;
-		}
+			max_val = new_max(val, ret, arr);
 		else
 			free(arr);
 		op_rotate(a);
